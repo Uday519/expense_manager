@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">expenses</string>
+    <string name="myexpenses">My Expenses</string>
+    <string name="item">item</string>
+    <string name="price">price</string>
+    <string name="AddItem">Submit</string>
+    <string name="search_expense">Search Expense</string>
+    <string name="add_new_expense">Add New Expense</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
