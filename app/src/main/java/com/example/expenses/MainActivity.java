@@ -20,6 +20,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.expenses.adapters.RecycleAdapter;
@@ -42,10 +44,14 @@ public class MainActivity extends AppCompatActivity implements RecycleAdapter.On
     private EditText expense_edittext;
     private EditText price_edittext;
     boolean isUpdate;
+    LinearLayout data;
+    RelativeLayout no_data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        no_data = findViewById(R.id.no_data);
+        data = findViewById(R.id.data);
         dialog = new Dialog(this);
         db = new DbManager(this.getApplicationContext());
         readExpenses = ReadExpenses.init(getApplicationContext());
@@ -54,8 +60,17 @@ public class MainActivity extends AppCompatActivity implements RecycleAdapter.On
         mViewModel.getmExpense().observe(this, new Observer<List<Expenses>>() {
             @Override
             public void onChanged(@Nullable List<Expenses> expenses) {
-                recycleAdapter.setExpensesList(expenses);
-                recycleAdapter.notifyDataSetChanged();
+                if(expenses.size() == 0){
+                    data.setVisibility(View.GONE);
+                    no_data.setVisibility(View.VISIBLE);
+                }
+                else {
+                    data.setVisibility(View.VISIBLE);
+                    no_data.setVisibility(View.GONE);
+                    recycleAdapter.setExpensesList(expenses);
+                    recycleAdapter.notifyDataSetChanged();
+                }
+
             }
         });
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -104,7 +119,8 @@ public class MainActivity extends AppCompatActivity implements RecycleAdapter.On
                 int id = expenses_temp.get(viewHolder.getAdapterPosition()).id;
                 db.deleteEexpense(id);
                 mViewModel.addNewExpense(readExpenses.readExpenses());
-                recycleAdapter.notifyDataSetChanged();
+                recycleAdapter.notifyItemRemoved(i);
+                recycleAdapter.notifyItemRangeChanged(i,expenses_temp.size()-1);
 
             }
         };
@@ -120,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements RecycleAdapter.On
         submit = dialog.findViewById(R.id.submit);
         expense_edittext.setText(expense);
         price_edittext.setText(price);
+        expense_edittext.requestFocus();
         close_dialog = dialog.findViewById(R.id.close_dialog);
         close_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements RecycleAdapter.On
                     if(db.addNewEXpense(Double.parseDouble(price_edittext.getText().toString()),expense_edittext.getText().toString())){
                         expense_edittext.setText("");
                         price_edittext.setText("");
+                        expense_edittext.requestFocus();
                         mViewModel.addNewExpense(readExpenses.readExpenses());
                         Toast toast = Toast.makeText(getApplicationContext(), "Expense Added Successfully", Toast.LENGTH_SHORT);
                         toast.show();

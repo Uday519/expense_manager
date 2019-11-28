@@ -72,7 +72,7 @@ public class Statistics extends AppCompatActivity {
 
 
         BarDataSet bardataset = new BarDataSet(costs, "Daily Expense Total");
-        chart.animateY(5000);
+        chart.animateY(3000);
         BarData data = new BarData(x_axis, bardataset);
         bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
         chart.setData(data);
