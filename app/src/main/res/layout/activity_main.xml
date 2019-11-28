@@ -73,7 +73,7 @@
                     android:textAlignment="center"
                     android:textSize="15sp"
                     android:paddingTop="15dp"
-                    android:textColor="#000"
+                    android:textColor="@color/black"
                     android:text="Date"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                     android:textAlignment="center"
                     android:textSize="15sp"
                     android:paddingTop="15dp"
-                    android:textColor="#000"
+                    android:textColor="@color/black"
                     android:text="Expense"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -93,7 +93,7 @@
                     android:textAlignment="center"
                     android:textSize="15sp"
                     android:paddingTop="15dp"
-                    android:textColor="#000"
+                    android:textColor="@color/black"
                     android:text="Cost"/>
 
             </LinearLayout>
@@ -120,6 +120,7 @@
             android:layout_marginBottom="34dp"
             android:src="@drawable/ic_plus_one_black_24dp"
             android:contentDescription="@string/add_new_expense"
+            android:backgroundTint="@color/black"
             />
     </RelativeLayout>
 </LinearLayout>

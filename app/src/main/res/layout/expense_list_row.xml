@@ -12,32 +12,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.5"
-        android:textStyle="bold"
         android:textAlignment="center"
         android:textSize="15sp"
         android:paddingTop="15dp"
-        android:textColor="#000"/>
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:textStyle="bold"
         android:textAlignment="center"
         android:textSize="15sp"
         android:paddingTop="15dp"
-        android:textColor="#000"/>
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/price"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.5"
-        android:textStyle="bold"
         android:textAlignment="center"
         android:textSize="15sp"
         android:paddingTop="15dp"
-        android:textColor="#000"/>
+        android:textColor="@color/black"/>
 
 </LinearLayout>
