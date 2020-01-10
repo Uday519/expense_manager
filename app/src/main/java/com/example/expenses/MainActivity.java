@@ -30,6 +30,7 @@ import com.example.expenses.database.ReadExpenses;
 import com.example.expenses.models.Expenses;
 import com.example.expenses.viewModels.ExpensesListViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements RecycleAdapter.OnExpenseListener {
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements RecycleAdapter.On
                 else {
                     data.setVisibility(View.VISIBLE);
                     no_data.setVisibility(View.GONE);
+//                    expenses = groupExpenses(expenses);
                     recycleAdapter.setExpensesList(expenses);
                     recycleAdapter.notifyDataSetChanged();
                 }
@@ -168,6 +170,36 @@ public class MainActivity extends AppCompatActivity implements RecycleAdapter.On
             }
         });
         dialog.show();
+
+    }
+
+    public List<Expenses> groupExpenses(List<Expenses> expenses){
+
+        List<Expenses> temp_expenses_list = new ArrayList<>();
+        int off_set=0;
+        for (int i = 0; i<expenses.size(); i++){
+            Expenses temp_expense  = expenses.get(i);
+            String item_names = expenses.get(i).getItem();
+            String item_prices = expenses.get(i).getPrice();
+            for(int j=0;j<expenses.size();j++){
+                if(temp_expense.id != expenses.get(j).id){
+                    if(temp_expense.day == expenses.get(j).day && temp_expense.month == expenses.get(j).month){
+                        off_set++;
+                        item_names = item_names.concat("\n");
+                        item_names = item_names.concat(expenses.get(j).item );
+                        item_prices = item_prices.concat("\n");
+                        item_prices = item_prices.concat(expenses.get(j).price);
+
+                    }
+                }
+            }
+            temp_expense.setPrice(item_prices);
+            temp_expense.setItem(item_names);
+            temp_expenses_list.add(i, temp_expense);
+            i = off_set;
+        }
+
+        return temp_expenses_list;
 
     }
 }

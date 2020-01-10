@@ -38,8 +38,6 @@ public class ReadExpenses {
                         Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
                 expenses.add(tempexpense);
             } while (cursor.moveToNext());
-
-
         }
         return expenses;
     }

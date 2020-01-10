@@ -10,6 +10,7 @@ import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -18,13 +19,16 @@ public class DbManager extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "expenses";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_NAME = "allexpenses";
+    private File DB_FILE;
 
     public DbManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        DB_FILE = context.getDatabasePath(DATABASE_NAME);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         String sql = "CREATE TABLE " + TABLE_NAME + " (\n" +
                 "    " + "id" + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
                 "    " + "day" + " INTEGER NOT NULL,\n" +
@@ -34,6 +38,10 @@ public class DbManager extends SQLiteOpenHelper {
                 "    " + "price" + " double NOT NULL\n" +
                 ");";
         db.execSQL(sql);
+    }
+
+    private boolean checkDataBase() {
+        return DB_FILE.exists();
     }
 
     @Override
@@ -65,7 +73,7 @@ public class DbManager extends SQLiteOpenHelper {
 
     public Cursor getALLItems(){
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY id DESC", null);
     }
 
     public Cursor searchItem(String data){
@@ -76,7 +84,7 @@ public class DbManager extends SQLiteOpenHelper {
 
     public Cursor getCost(){
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("SELECT day,month,year,SUM(price) as cost FROM allexpenses GROUP BY day;",null);
+        return db.rawQuery("SELECT day,month,year,SUM(price) as cost FROM allexpenses GROUP BY day Order BY id DESC LIMIT 7;",null);
     }
 
     public boolean updateNewEXpense(Double price, String item, int id){

@@ -65,7 +65,9 @@ public class Statistics extends AppCompatActivity {
         ArrayList costs = new ArrayList();
         ArrayList x_axis = new ArrayList();
         for(int i=0;i<expenseLists.size();i++){
-            String date = expenseLists.get(i).day +"-"+expenseLists.get(i).month+"-"+expenseLists.get(i).year;
+            String year = String.valueOf(expenseLists.get(i).year);
+            year = year.substring(year.length() - 2);
+            String date = expenseLists.get(i).day +"-"+expenseLists.get(i).month+"-"+year;
             costs.add(new BarEntry(Float.valueOf(expenseLists.get(i).price),i));
             x_axis.add(date);
         }
